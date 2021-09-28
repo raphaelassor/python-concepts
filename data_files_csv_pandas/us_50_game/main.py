@@ -18,7 +18,7 @@ while correct_states_count < 50:
     state_data = data[data.state == answer_state]
     if len(state_data.state) < 1:
         continue
-    if correct_states_map.get(answer_state):
+    if answer_state in correct_states_map:
         continue
     correct_states_map[answer_state] = (int(state_data.x.item()), int(state_data.y))
     correct_states_count += 1
@@ -30,7 +30,7 @@ while correct_states_count < 50:
 
 
 all_states=data["state"].to_list()
-missing_states=[state for state in all_states if not correct_states_map.get(state)]
+missing_states=[state for state in all_states if state not in correct_states_map]
 
 missing_states_data=pandas.DataFrame(missing_states)
 missing_states_data.to_csv(f"missing_states_{random.randint(0,1000)}.csv")
